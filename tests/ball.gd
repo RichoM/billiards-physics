@@ -2,6 +2,7 @@ tool
 extends Area2D
 
 onready var polygon := $"%polygon"
+onready var border := $"%border"
 onready var shape := $"%shape"
 onready var line := $"%line"
 
@@ -37,6 +38,7 @@ func _process(delta):
 	if dirty_flag:
 		update_color()
 		update_polygon()
+		update_border()
 		update_shape()
 		dirty_flag = false
 		
@@ -56,6 +58,11 @@ func update_polygon():
 		vertices.append(pt)
 		
 	polygon.polygon = vertices
+	
+func update_border():
+	var vertices := PoolVector2Array(polygon.polygon)
+	vertices.append(vertices[0])
+	border.points = vertices
 	
 func update_shape():
 	var circle_shape := shape.shape as CircleShape2D
@@ -77,5 +84,18 @@ func handle_input():
 		line.points[1] = Vector2.ZERO
 
 func _physics_process(_delta):
+	if Engine.editor_hint: return
+	
 	global_position += velocity
 	velocity *= 0.98
+	
+	var overlapping_areas := get_overlapping_areas()
+	if !overlapping_areas.empty():
+		polygon.color = Color.orangered
+		handle_collisions(overlapping_areas)
+	else:
+		update_color()
+
+func handle_collisions(collisions):
+	for collision in collisions:
+		pass
