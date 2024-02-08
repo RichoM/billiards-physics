@@ -30,3 +30,18 @@ unique_name_in_owner = true
 points = PoolVector2Array( 0, 0, 0, 0 )
 width = 5.0
 default_color = Color( 1, 0.4, 0.4, 1 )
+
+[node name="velocity" type="Line2D" parent="."]
+unique_name_in_owner = true
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 2.0
+
+[node name="debug_label" type="Label" parent="."]
+unique_name_in_owner = true
+margin_left = -32.0
+margin_top = -33.0
+margin_right = 32.0
+margin_bottom = -19.0
+align = 1
+
+[connection signal="area_entered" from="." to="." method="_on_ball_area_entered"]

@@ -5,6 +5,8 @@ onready var polygon := $"%polygon"
 onready var border := $"%border"
 onready var shape := $"%shape"
 onready var line := $"%line"
+onready var velocity_line := $"%velocity"
+onready var debug_label := $"%debug_label"
 
 export var is_white := true setget set_is_white
 func set_is_white(val):
@@ -70,24 +72,36 @@ func update_shape():
 
 func handle_input():
 	if Engine.editor_hint: return
-	if !is_white: return
-	
-	if Input.is_action_just_pressed("click"):
-		mouse_begin_pos = get_global_mouse_position()
-	elif Input.is_action_just_released("click"):
-		mouse_end_pos = get_global_mouse_position()
-		velocity += (mouse_begin_pos - mouse_end_pos) * 0.025
-	elif Input.is_mouse_button_pressed(1):
-		var delta := mouse_begin_pos - get_global_mouse_position()
-		line.points[1] = delta
+	if is_white:
+		if Input.is_action_just_pressed("click"):
+			mouse_begin_pos = get_global_mouse_position()
+		elif Input.is_action_just_released("click"):
+			mouse_end_pos = get_global_mouse_position()
+			velocity += (mouse_begin_pos - mouse_end_pos) * 0.025
+		elif Input.is_mouse_button_pressed(1):
+			var delta := mouse_begin_pos - get_global_mouse_position()
+			line.points[1] = delta
+		else:
+			line.points[1] = Vector2.ZERO
 	else:
-		line.points[1] = Vector2.ZERO
+		var speed_multiplier := 0.25
+		if Input.is_action_pressed("ui_up"):
+			velocity += Vector2.UP * speed_multiplier
+		elif Input.is_action_pressed("ui_down"):
+			velocity += Vector2.DOWN * speed_multiplier
+			
+		if Input.is_action_pressed("ui_left"):
+			velocity += Vector2.LEFT * speed_multiplier
+		elif Input.is_action_pressed("ui_right"):
+			velocity += Vector2.RIGHT * speed_multiplier
+		
 
 func _physics_process(_delta):
 	if Engine.editor_hint: return
 	
 	global_position += velocity
 	velocity *= 0.98
+	velocity_line.points[1] = velocity * 10
 	
 	var overlapping_areas := get_overlapping_areas()
 	if !overlapping_areas.empty():
@@ -99,3 +113,22 @@ func _physics_process(_delta):
 func handle_collisions(collisions):
 	for collision in collisions:
 		pass
+		
+		
+
+
+func _on_ball_area_entered(collision):
+	var m1 := 1.0
+	var v1 : Vector2 = velocity
+	var x1 := global_position
+	
+	var m2 := 1.0
+	var v2 : Vector2 = collision.velocity
+	var x2 : Vector2 = collision.global_position
+	
+	var foo := (2*m2) / (m1+m2)
+	var bar := ((v1-v2).dot(x1-x2)/(x1-x2).length_squared())
+	var baz := x1 - x2
+	
+	var new_velocity = v1 - foo * bar * baz
+	set_deferred("velocity", new_velocity)
