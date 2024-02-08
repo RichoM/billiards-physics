@@ -106,29 +106,15 @@ func _physics_process(_delta):
 	var overlapping_areas := get_overlapping_areas()
 	if !overlapping_areas.empty():
 		polygon.color = Color.orangered
-		handle_collisions(overlapping_areas)
 	else:
 		update_color()
 
-func handle_collisions(collisions):
-	for collision in collisions:
-		pass
-		
-		
-
-
-func _on_ball_area_entered(collision):
-	var m1 := 1.0
-	var v1 : Vector2 = velocity
-	var x1 := global_position
+func _on_ball_area_entered(ball):
+	# HACK(Richo): We assume both balls have the same mass, thus we can ignore a few calculations
+	var dp = global_position - ball.global_position
+	var dv = velocity - ball.velocity
+	var new_velocity = velocity - (dv.dot(dp) / dp.length_squared()) * dp
 	
-	var m2 := 1.0
-	var v2 : Vector2 = collision.velocity
-	var x2 : Vector2 = collision.global_position
-	
-	var foo := (2*m2) / (m1+m2)
-	var bar := ((v1-v2).dot(x1-x2)/(x1-x2).length_squared())
-	var baz := x1 - x2
-	
-	var new_velocity = v1 - foo * bar * baz
-	set_deferred("velocity", new_velocity)
+	# HACK(Richo): Important! We have to give the other balls a chance to calculate using this
+	# ball old velocity before we update it with its new value
+	set_deferred("velocity", new_velocity) 
