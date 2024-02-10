@@ -10,58 +10,76 @@ script = ExtResource( 2 )
 current = true
 
 [node name="ball" parent="." instance=ExtResource( 1 )]
+position = Vector2( -53, -4 )
+is_white = false
 
 [node name="ball2" parent="." instance=ExtResource( 1 )]
 position = Vector2( -36, -64 )
+is_white = false
 
 [node name="ball3" parent="." instance=ExtResource( 1 )]
 position = Vector2( -53, -16 )
+is_white = false
 
 [node name="ball4" parent="." instance=ExtResource( 1 )]
 position = Vector2( 0, 56 )
+is_white = false
 
 [node name="ball5" parent="." instance=ExtResource( 1 )]
 position = Vector2( -81, 17 )
+is_white = false
 
 [node name="ball6" parent="." instance=ExtResource( 1 )]
 position = Vector2( -83, 64 )
+is_white = false
 
 [node name="ball7" parent="." instance=ExtResource( 1 )]
 position = Vector2( 84, 63 )
+is_white = false
 
 [node name="ball8" parent="." instance=ExtResource( 1 )]
 position = Vector2( 117, 22 )
+is_white = false
 
 [node name="ball9" parent="." instance=ExtResource( 1 )]
 position = Vector2( 170, 79 )
+is_white = false
 
 [node name="ball10" parent="." instance=ExtResource( 1 )]
 position = Vector2( 50, -74 )
+is_white = false
 
 [node name="ball11" parent="." instance=ExtResource( 1 )]
 position = Vector2( 104, -21 )
+is_white = false
 
 [node name="ball12" parent="." instance=ExtResource( 1 )]
 position = Vector2( 116, -62 )
+is_white = false
 
 [node name="ball13" parent="." instance=ExtResource( 1 )]
 position = Vector2( 55, -146 )
+is_white = false
 
 [node name="ball14" parent="." instance=ExtResource( 1 )]
 position = Vector2( 186, -170 )
+is_white = false
 
 [node name="ball15" parent="." instance=ExtResource( 1 )]
 position = Vector2( 142, -120 )
+is_white = false
 
 [node name="ball16" parent="." instance=ExtResource( 1 )]
 position = Vector2( 160, -88 )
+is_white = false
 
 [node name="ball17" parent="." instance=ExtResource( 1 )]
 position = Vector2( 186, -125 )
+is_white = false
 
 [node name="ball18" parent="." instance=ExtResource( 1 )]
 position = Vector2( 229, -140 )
+is_white = false
 
 [node name="white_ball" parent="." instance=ExtResource( 1 )]
 position = Vector2( 58, 3 )
-is_white = true

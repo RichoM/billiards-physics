@@ -1,5 +1,5 @@
 tool
-extends Area2D
+extends KinematicBody2D
 
 onready var polygon := $"%polygon"
 onready var border := $"%border"
@@ -99,15 +99,33 @@ func handle_input():
 func _physics_process(_delta):
 	if Engine.editor_hint: return
 	
-	global_position += velocity
+	
+	#global_position += velocity
+	var collision = move_and_collide(velocity)
+	if is_white:
+		OS.set_window_title(str(collision))
+	if collision != null:
+		var ball = collision.collider
+		var dp1 = global_position - ball.global_position
+		var dv1 = velocity - ball.velocity
+		var new_velocity1 = velocity - (dv1.dot(dp1) / dp1.length_squared()) * dp1
+		
+		var dp2 = ball.global_position - global_position
+		var dv2 = ball.velocity - velocity
+		var new_velocity2 = ball.velocity - (dv2.dot(dp2) / dp2.length_squared()) * dp2
+		
+		velocity = new_velocity1
+		ball.velocity = new_velocity2
+	
 	velocity *= 0.98
 	velocity_line.points[1] = velocity * 10
 	
-	var overlapping_areas := get_overlapping_areas()
-	if !overlapping_areas.empty():
-		polygon.color = Color.orangered
-	else:
-		update_color()
+	
+#	var overlapping_areas := get_overlapping_areas()
+#	if !overlapping_areas.empty():
+#		polygon.color = Color.orangered
+#	else:
+#		update_color()
 
 func _on_ball_area_entered(ball):
 	# HACK(Richo): We assume both balls have the same mass, thus we can ignore a few calculations

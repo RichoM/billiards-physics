@@ -5,14 +5,12 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 15.0
 
-[node name="ball" type="Area2D"]
+[node name="ball" type="KinematicBody2D"]
 script = ExtResource( 1 )
-is_white = false
 radius = 15.0
 
 [node name="polygon" type="Polygon2D" parent="."]
 unique_name_in_owner = true
-color = Color( 0.678431, 1, 0.184314, 1 )
 polygon = PoolVector2Array( 1.47026, 14.9278, -1.47026, 14.9278, -4.35427, 14.3541, -7.07095, 13.2288, -9.5159, 11.5952, -11.5952, 9.5159, -13.2288, 7.07095, -14.3541, 4.35427, -14.9278, 1.47026, -14.9278, -1.47026, -14.3541, -4.35427, -13.2288, -7.07095, -11.5952, -9.5159, -9.5159, -11.5952, -7.07095, -13.2288, -4.35427, -14.3541, -1.47026, -14.9278, 1.47026, -14.9278, 4.35427, -14.3541, 7.07095, -13.2288, 9.5159, -11.5952, 11.5952, -9.5159, 13.2288, -7.07095, 14.3541, -4.35427, 14.9278, -1.47026, 14.9278, 1.47026, 14.3541, 4.35427, 13.2288, 7.07095, 11.5952, 9.5159, 9.5159, 11.5952, 7.07095, 13.2288, 4.35427, 14.3541 )
 
 [node name="border" type="Line2D" parent="."]
@@ -43,5 +41,3 @@ margin_top = -33.0
 margin_right = 32.0
 margin_bottom = -19.0
 align = 1
-
-[connection signal="area_entered" from="." to="." method="_on_ball_area_entered"]
