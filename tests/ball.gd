@@ -120,6 +120,16 @@ func _physics_process(_delta):
 	velocity *= 0.98
 	velocity_line.points[1] = velocity * 10
 	
+	if global_position.x + radius < -512:
+		global_position.x = 512 + radius
+	elif global_position.x - radius > 512:
+		global_position.x = -512 - radius
+	
+	if global_position.y + radius < -300:
+		global_position.y = 300 + radius
+	elif global_position.y - radius > 300:
+		global_position.y = -300 - radius
+		
 	
 #	var overlapping_areas := get_overlapping_areas()
 #	if !overlapping_areas.empty():
